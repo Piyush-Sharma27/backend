@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 // mongoose.connect('mongodb://localhost:3000/mongopractice');
 
-const studentSchema = mongoose.Schema({
+const studentSchema = new mongoose.Schema({
 
    name: { type: String },       
   rollnumber: { type: Number, unique:true }   

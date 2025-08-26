@@ -1,4 +1,3 @@
-// const { info } = require('cros/common/logger');
 const studentmodel = require('../Model/studentmodel');
 
 async function createStudent(req, res) {

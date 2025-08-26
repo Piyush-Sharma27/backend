@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const studentDataSchema = new mongoose.Schema({
-    subject: { type: String,  },
+    subject: { type: String  },
     marks: { type: Number },
     
 
     student:{
-        type:mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref:"studentmodel",
         required:true
     }
