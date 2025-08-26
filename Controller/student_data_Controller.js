@@ -1,4 +1,5 @@
 const student_data_model = require('../Model/student_data_model');
+const studentmodel = require('../Model/studentmodel');
 
 
 async function createsubject(req, res) {
@@ -37,7 +38,7 @@ async function createsubject(req, res) {
 async function getstudentdata(req, res) {
     try {
         const studentsdata = await student_data_model.find()
-        .populate("student","name rollnumber");
+            .populate("student", "name rollnumber");
         res.status(200).json({ response: studentsdata });
     } catch (error) {
         res.status(500).json({ message: 'Failed to fetch student', error: error.message });
