@@ -35,14 +35,77 @@ async function createsubject(req, res) {
 
 }
 
+// async function getstudentdata(req, res) {
+//     try {
+//         const studentsdata = await student_data_model.find()
+//             .populate("student", "name rollnumber");
+//         res.status(200).json({ response: studentsdata });
+//     } catch (error) {
+//         res.status(500).json({ message: 'Failed to fetch student', error: error.message });
+//     }
+// }
+
+
+// doing with the Aggregate
+
+// async function getstudentdata(req, res) {
+//     try {
+//         const studentsdata = await student_data_model.aggregate([
+//             {
+
+//                 $lookup:{
+//                     from:"studentmodels",
+//                      localField: "student",
+//                      foreignField: "_id",
+//                       as: "studentInfo"
+//                 }
+
+//             },
+
+//                 {
+//         $unwind: {
+//           path: "$studentInfo",
+//           preserveNullAndEmptyArrays: true
+//         }
+//             }
+//         ]);
+
+//         res.status(200).json({ response: studentsdata }); 
+//         catch (error) {
+//         res.status(500).json({ message: 'Failed to fetch student', error: error.message });
+//     }
+//     }
+// }
+
 async function getstudentdata(req, res) {
     try {
-        const studentsdata = await student_data_model.find()
-            .populate("student", "name rollnumber");
-        res.status(200).json({ response: studentsdata });
+        const studentsdata = await student_data_model.aggregate([
+            {
+                $lookup: {
+                    from: "studentmodels",   
+                    localField: "student",
+                    foreignField: "_id",
+                    as: "studentInfo"
+                }
+            },
+            {
+                $unwind: {
+                    path: "$studentInfo",
+                    preserveNullAndEmptyArrays: true
+                }
+            }
+        ]);
+
+        res.status(200).json({ response: studentsdata }); 
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: 'Failed to fetch student', error: error.message });
     }
 }
+
+module.exports = { createsubject, getstudentdata };
+
+
+
 
 module.exports = { createsubject, getstudentdata };
